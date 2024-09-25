@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="actionButton">Click me</button>
+
+  <form id="myForm">
+    <select name="single">
+      <option>Single</option>
+      <option>Single2</option>
+    </select>
+    <select name="multiple" multiple="multiple">
+      <option selected="selected">Multiple</option>
+      <option>Multiple2</option>
+      <option selected="selected">Multiple3</option>
+    </select>
+    <br />
+    <input type="checkbox" name="check" value="check1" id="ch1" />
+    <label for="ch1">check1</label>
+    <input type="checkbox" name="check" value="check2" checked="checked" id="ch2" />
+    <label for="ch2">check2</label>
+    <input type="radio" name="radio" value="radio1" checked="checked" id="r1" />
+    <label for="r1">radio1</label>
+    <input type="radio" name="radio" value="radio2" id="r2" />
+    <label for="r2">radio2</label>
+
+    <button>Submit</button>
+  </form>
+
+  <div class="container"></div>
+  <div class="inner"></div>
+
+  <img src="https://picsum.photos/id/237/200/300" alt="Random image">
+
+  <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+  </ul>
+
+  <a href="https://www.example.com">Link to another website</a>
+
+  <table>
+    <tr>
+      <th>Header 1</th>
+      <th>Header 2</th>
+    </tr>
+    <tr>
+      <td>Cell 1</td>
+      <td>Cell 2</td>
+    </tr>
+    <tr>
+      <td>Cell 3</td>
+      <td>Cell 4</td>
+    </tr>
+  </table>
+
+  <script type="module">
+    import nq from './../src/nq.js'
+
+    // 1. Basic DOM Selection
+    nq('h1') // Selects all <h1> elements in the document
+    nq('.my-class') // Selects all elements with class "my-class"
+    nq('#my-id') // Selects the element with id "my-id"
+
+    // 2. Event Handling with .on(), .off(), and .one()
+    nq('#actionButton').on('click', function (event) {
+      event.preventDefault()
+
+      alert('Button clicked!')
+    })
+
+    const clickHandler = function () {
+      alert('This will be removed')
+    }
+
+    nq('#actionButton').on('click', clickHandler)
+    nq('#actionButton').off('click', clickHandler) // Removes the click event
+
+    nq('#actionButton').one('click', function () {
+      alert('This will only trigger once!')
+    })
+
+    // 3. HTML Content Manipulation with .html()
+    nq('.container').html('<p>New content here!</p>')
+    console.log(nq('.container').html()) // Retrieves the innerHTML of the first .container element
+    console.log(nq('.container').text()) // Retrieves the innerText of the first .container element
+
+    // 4. Class Manipulation
+    nq('.container').addClass('active') // Adds the class 'active' to all .my-element elements
+    nq('.container').toggleClass('active') // Toggles the 'active' class on .my-element elements
+    nq('.container').toggleClass('active') // Toggles the 'active' class on .my-element elements
+
+    // 5. Attribute Manipulation with .attr()
+    nq('img').attr('alt', 'Random Image from picsum') // Sets the 'src' attribute of all <img> elements
+    console.log(nq('img').attr('src')) // Retrieves the 'src' attribute of the first <img> element
+
+    // 6. Appending, Prepending, Inserting Before/After, and Removing Elements
+    nq('.container').append('<p class="new-item">Appended element</p>') // Appends an HTML string
+    nq('.container').append('div', { class: 'new-item' }) // Appends a new <div> element with attributes
+
+    nq('.container').prepend('<p>Prepended content</p>') // Prepends an HTML string
+    nq('.container').prepend('span', { class: 'highlight' }) // Prepends a new <span> with attributes
+
+    nq('.inner').before('<p>Before this element</p>') // Inserts an HTML string before each .inner element
+    nq('.inner').before('hr') // Inserts a new <hr> before each .inner element
+
+    nq('.inner').after('<p>After this element</p>') // Inserts an HTML string after each .inner element
+    nq('.inner').after('hr') // Inserts a new <hr> after each .inner element
+
+    // 7. Form Serialization
+    nq('form#myForm')
+      .on('submit', function (event) {
+        event.preventDefault()
+        console.log(nq(this).serialize()) // Logs the serialized form data
+        console.log(nq(this).serializeArray()) // Logs the array of form data
+      })
+      .append('<input type="hidden" name="token" value="abc123">') // Append a hidden field
+
+  </script>
+</body>
+
+</html>
